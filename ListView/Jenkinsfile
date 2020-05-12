@@ -24,9 +24,6 @@ pipeline {
         }
         
         stage('Sauce Testing'){
-            when {
-                branch 'java'
-            }
             steps {
                 dir("ListView") {
                     sauce('sauce_aceess_key') {
