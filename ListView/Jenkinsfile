@@ -56,12 +56,13 @@ pipeline {
                             def userEmail
                             // Get the input
                             def userInput = input(
-                            id: 'userInput', message: 'Enter path of test reports:?',
-                            parameters: [
-                                string(defaultValue: 'None',
-                                description: 'Enter an email to which the APK will be send. If no email is entered, the default behaviour will be executed',
-                                name: 'UserEmail'),
-                            ])
+                                id: 'userInput', message: 'Enter email',
+                                parameters: [
+                                    string(defaultValue: '',
+                                    description: 'Enter an email to which the APK will be send. If no email is entered, the default behaviour will be executed',
+                                    name: 'UserEmail'),
+                                ]
+                            )
                             userEmail = userInput.UserEmail?:''
                             if ($userEmail == ''){
                                 emailext body: 'A Test EMail', subject: 'Test', to: '$DEFAULT_RECIPIENTS' 
