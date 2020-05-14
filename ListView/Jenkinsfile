@@ -59,7 +59,7 @@ pipeline {
                                                 string(defaultValue: '',
                                                 description: 'Enter an email to which the APK will be send. If no email is entered, the default behaviour will be executed',
                                                 name: 'UserEmail')]
-                            def userEmail = userInput['UserEmail']
+                            def userEmail = "${userInput['UserEmail']}"
                             if ( "${userEmail}" == '' ){
                                 emailext body: 'A Test EMail', subject: 'Test', to: '$DEFAULT_RECIPIENTS' 
                                 sh 'echo "build started by ${BUILD_USER_EMAIL}"'
