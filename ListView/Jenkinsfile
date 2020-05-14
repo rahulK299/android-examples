@@ -54,19 +54,16 @@ pipeline {
                             sh 'echo "build started by git commit"'
                         }else {
                             // Get the input
-                            def userInput = input(
-                                id: 'userInput', message: 'Enter email',
-                                parameters: [
-                                    string(defaultValue: '',
-                                    description: 'Enter an email to which the APK will be send. If no email is entered, the default behaviour will be executed',
-                                    name: 'UserEmail'),
-                                ]
-                            )?:''
-                            if ("${userInput}" == ''){
+                            def userInput = input id: 'userInput', message: 'Enter email',
+                                            parameters: [
+                                                string(defaultValue: '',
+                                                description: 'Enter an email to which the APK will be send. If no email is entered, the default behaviour will be executed',
+                                                name: 'UserEmail')]
+                            def userEmail = userInput['UserEmail']
+                            if ( "${userEmail}" == '' ){
                                 emailext body: 'A Test EMail', subject: 'Test', to: '$DEFAULT_RECIPIENTS' 
                                 sh 'echo "build started by ${BUILD_USER_EMAIL}"'
                             }else {
-                                def userEmail = "${userInput['UserEmail']}"
                                 sh 'echo "build started by ${userEmail}"' 
                             }
                         }
