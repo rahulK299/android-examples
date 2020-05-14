@@ -51,12 +51,21 @@ pipeline {
                 }
             }
         }
-        stage("Get Build Artifacts for debug"){
+        stage("Send Debug apk over email"){
             when {
                 branch 'develop' 
             }
             steps {
-                archiveArtifacts artifacts : 'ListView/app/build/outputs/apk/debug/*.apk', fingerprint: true
+                script {
+                    wrap([$class: 'BuildUser']) {
+                        sh 'echo "${BUILD_USER}"'
+                        if ($BUILD_USER_ID == '') {
+                            sh 'echo "build started by git commit"'
+                        }else {
+                            sh 'echo "build started by ${BUILD_USER_EMAIL}"'
+                        }
+                    }
+                }
             }
         }
         stage('Release apk creation ') {
