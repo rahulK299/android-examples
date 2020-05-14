@@ -6,6 +6,8 @@ pipeline {
                 script {
                     wrap([$class: 'BuildUser']) {
                         sh 'echo "${BUILD_USER}"'
+                        sh 'echo "${BUILD_USER_ID}"'
+                        sh 'echo "${BUILD_USER_EMAIL}"'
                     }
                 }
             }
