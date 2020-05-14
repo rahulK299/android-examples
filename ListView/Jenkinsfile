@@ -1,17 +1,6 @@
 pipeline {
     agent any
     stages{      
-        stage('Set Current User') {
-            steps {
-                script {
-                    wrap([$class: 'BuildUser']) {
-                        sh 'echo "${BUILD_USER}"'
-                        sh 'echo "${BUILD_USER_ID}"'
-                        sh 'echo "${BUILD_USER_EMAIL}"'
-                    }
-                }
-            }
-        }
          stage('Dependencies') {
             steps {
                 sh 'export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-amd64'
@@ -64,6 +53,9 @@ pipeline {
                         if ("${BUILD_USER_ID}" == '') {
                             sh 'echo "build started by git commit"'
                         }else {
+                            steps {
+                                sh 'echo "Hello "'
+                            }
                             sh 'echo "build started by ${BUILD_USER_EMAIL}"'
                         }
                     }
