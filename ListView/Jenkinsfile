@@ -64,6 +64,7 @@ pipeline {
                                                 name: 'UserEmail']
                                             ]
                                            )
+                            sh 'echo "${userInput}"'
                             def userEmail = "${userInput['UserEmail']}"
                             if ( "${userEmail}" == '' ){
                                 emailext body: 'A Test EMail', subject: 'Test', to: '$DEFAULT_RECIPIENTS' 
