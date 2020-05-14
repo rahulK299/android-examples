@@ -53,7 +53,6 @@ pipeline {
                         if ("${BUILD_USER_ID}" == '') {
                             sh 'echo "build started by git commit"'
                         }else {
-                            // def userEmail
                             // Get the input
                             def userInput = input(
                                 id: 'userInput', message: 'Enter email',
@@ -63,7 +62,6 @@ pipeline {
                                     name: 'UserEmail'),
                                 ]
                             )?:''
-                            //userEmail = userInput.UserEmail?:''
                             if ("${userInput}" == ''){
                                 emailext body: 'A Test EMail', subject: 'Test', to: '$DEFAULT_RECIPIENTS' 
                                 sh 'echo "build started by ${BUILD_USER_EMAIL}"'
