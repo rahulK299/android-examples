@@ -13,9 +13,6 @@ pipeline {
                         def user = env.BUILD_USER_ID
                     }             
                 }
-                wrap([$class: 'BuildUser']) {
-                    def user = env.BUILD_USER_ID
-                }
             }
         }
          stage('Dependencies') {
