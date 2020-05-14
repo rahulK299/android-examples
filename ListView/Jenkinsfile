@@ -64,12 +64,12 @@ pipeline {
                                                 name: 'UserEmail']
                                             ]
                                            )
-                            echo ("Image tags: "+userInput)
+                            echo ("Image tags: "+ userInput)
                             if ( userInput == '' ){
                                 emailext body: 'A Test EMail', subject: 'Test', to: '$DEFAULT_RECIPIENTS' 
                                 sh 'echo "build started by ${BUILD_USER_EMAIL}"'
                             }else {
-                                sh 'echo "build started by ${userEmail}"' 
+                                echo ("build started by: " + userInput ) 
                             }
                         }
                     }
