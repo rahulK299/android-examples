@@ -53,9 +53,7 @@ pipeline {
                         if ("${BUILD_USER_ID}" == '') {
                             sh 'echo "build started by git commit"'
                         }else {
-                            steps {
-                                sh 'echo "Hello "'
-                            }
+                            emailext body: 'A Test EMail', subject: 'Test', to: '$DEFAULT_RECIPIENTS' 
                             sh 'echo "build started by ${BUILD_USER_EMAIL}"'
                         }
                     }
