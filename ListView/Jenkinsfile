@@ -59,15 +59,13 @@ pipeline {
                                             message: 'Enter email',
                                             parameters: [
                                                 [$class: 'StringParameterDefinition',
-                                                defaultValue: 'None',
+                                                defaultValue: '',
                                                 description: 'Pleae enter your email, otherwise default behavoir will be executed by script',
                                                 name: 'UserEmail']
                                             ]
                                            )
                             echo ("Image tags: "+userInput)
-                            sh 'echo userInput'
-                            def userEmail = "${userInput['UserEmail']}"
-                            if ( "${userEmail}" == '' ){
+                            if ( userInput == '' ){
                                 emailext body: 'A Test EMail', subject: 'Test', to: '$DEFAULT_RECIPIENTS' 
                                 sh 'echo "build started by ${BUILD_USER_EMAIL}"'
                             }else {
