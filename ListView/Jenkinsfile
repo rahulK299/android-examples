@@ -49,30 +49,31 @@ pipeline {
             steps {
                 script {
                     def isStartedByUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause) != null
-                    echo ("Testing: " + isStartedByUser)
-                    wrap([$class: 'BuildUser']) {
-                        sh 'echo "${BUILD_USER}"'
-                        if ("${BUILD_USER_ID}" == '') {
-                            sh 'echo "build started by git commit"'
-                        }else {
-                            // Get the input
-                            def userInput = input( 
-                                            id: 'userInput',
-                                            message: 'Enter email',
-                                            parameters: [
-                                                [$class: 'StringParameterDefinition',
-                                                defaultValue: '',
-                                                description: 'Pleae enter your email, otherwise default behavoir will be executed by script',
-                                                name: 'UserEmail']
-                                            ]
-                                           )
-                            echo ("Image tags: "+ userInput)
-                            if ( userInput == '' ){
-                                emailext body: 'A Test EMail', subject: 'Test', to: '$DEFAULT_RECIPIENTS' 
+                    if (!isStartedByUser) {
+                        sh 'echo "build started by git commit"'
+                        emailext body: 'A Test EMail', subject: 'Test', to: '${BUILD_USER_EMAIL}'
+                    }else {
+                        // Get the input
+                        def userInput = input( 
+                            id: 'userInput',
+                            message: 'Enter email',
+                            parameters: [
+                                [
+                                    $class: 'StringParameterDefinition',
+                                    defaultValue: '',
+                                    description: 'Pleae enter your email, otherwise default behavoir will be executed by script',
+                                    name: 'UserEmail']
+                                ]
+                            )
+                        echo ("Image tags: "+ userInput)
+                        if ( userInput == '' ){
+                            wrap([$class: 'BuildUser']) {
+                                emailext body: 'A Test EMail', subject: 'Test', to: '${BUILD_USER_EMAIL}' 
                                 sh 'echo "build started by ${BUILD_USER_EMAIL}"'
-                            }else {
-                                echo ("build started by: " + userInput ) 
                             }
+                        }else {
+                            emailext body: 'A Test EMail', subject: 'Test', to: userInput
+                            echo ("build started by: " + userInput ) 
                         }
                     }
                 }
