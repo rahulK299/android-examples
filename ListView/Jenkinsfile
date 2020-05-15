@@ -51,7 +51,7 @@ pipeline {
                     def isStartedByUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause) != null
                     if (!isStartedByUser) {
                         sh 'echo "build started by git commit"'
-                        emailext body: 'A Test EMail', subject: 'Test', to: '${BUILD_USER_EMAIL}'
+                        emailext body: 'A Test EMail', subject: 'Test', to: 'default@gmail.com'
                     }else {
                         // Get the input
                         def userInput = input( 
