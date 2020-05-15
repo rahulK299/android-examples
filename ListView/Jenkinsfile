@@ -44,7 +44,7 @@ pipeline {
         }
         stage("Send Debug apk over email"){
             when {
-                branch 'java' 
+                branch 'develop' 
             }
             steps {
                 script {
