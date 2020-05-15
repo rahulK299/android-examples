@@ -48,6 +48,7 @@ pipeline {
             }
             steps {
                 script {
+                    archiveArtifacts artifacts : 'ListView/app/build/outputs/apk/debug/*.apk', fingerprint: true
                     def isStartedByUser = currentBuild.rawBuild.getCause(hudson.model.Cause$UserIdCause) != null
                     if (!isStartedByUser) {
                         sh 'echo "build started by git commit"'
@@ -72,7 +73,7 @@ pipeline {
                                 sh 'echo "build started by ${BUILD_USER_EMAIL}"'
                             }
                         }else {
-                            emailext body: 'A Test EMail', subject: 'Test', to: userInput
+                            emailext attachmentsPattern: '*.apk', body: 'A Test EMail', subject: 'Test', to: userInput
                             echo ("build started by: " + userInput ) 
                         }
                     }
