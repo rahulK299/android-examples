@@ -24,8 +24,8 @@ pipeline {
             }
             steps {
                 dir("ListView") {
-                    sauce('sauce_aceess_key') {
-                        // some block
+                    withCredentials([usernamePassword(credentialsId: 'sauce_aceess_key', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME')]) {
+                        // sh("curl -u \"${SAUCE_USERNAME}:${SAUCE_ACCESS_KEY}\" -X POST https://app.testobject.com:443/api/storage/upload -H \"Content-Type: application/octet-stream\" --data-binary @your_app.apk")
                     }
                 }
             }
@@ -83,6 +83,7 @@ pipeline {
                 branch 'master'
             }
             steps {
+                sh 'pwd'
                 //slackSend(
                 //    channel: '',
                 //    tokenCredentialId: 'slack-token',
