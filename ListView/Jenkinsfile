@@ -25,7 +25,7 @@ pipeline {
             steps {
                 dir("ListView") {
                     withCredentials([usernamePassword(credentialsId: 'sauce_aceess_key', passwordVariable: 'SAUCE_ACCESS_KEY', usernameVariable: 'SAUCE_USERNAME')]) {
-                        // sh("curl -u \"${SAUCE_USERNAME}:${SAUCE_ACCESS_KEY}\" -X POST https://app.testobject.com:443/api/storage/upload -H \"Content-Type: application/octet-stream\" --data-binary @your_app.apk")
+                         sh("curl -u \"${SAUCE_USERNAME}:${SAUCE_ACCESS_KEY}\" -X POST https://app.testobject.com:443/api/storage/upload -H \"Content-Type: application/octet-stream\" --data-binary @your_app.apk")
                     }
                 }
             }
